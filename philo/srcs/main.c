@@ -1,36 +1,17 @@
 #include "philosophers.h"
 
-void *f1(void *arg)
+int main (int argc, char *argv[])
 {
-	int *iptr = (int *)arg;
-	for(int i = 0; i < 5; i++)
+	if (argc == 5)
 	{
-		sleep(1);
-		printf("My   turn {%d}!\n", i);
-		(*iptr)++;
+		printf("Correct no of aguments!\n");
+		printf("%s\n", argv[0]);
 	}
-	return ((void *)iptr);
-}
-
-void *f2()
-{
-	for(int i = 0;i < 3; i++)
+	else if (argc == 6)
 	{
-		sleep(1);
-		printf("Your turn {%d}!\n", i);
+		printf("Correct no of aguments with np_eat!\n");
 	}
-	return (NULL);
-}
-
-int main (void)
-{
-	pthread_t thread;
-	int count = 5;
-	int *ptr;
-
-	pthread_create(&thread, NULL, f1, &count);
-	f2();
-	pthread_join(thread, (void *)&ptr);
-	printf("Return value : %d\n", *ptr);
+	else
+		write(2,"Error\n",7);
 	return (0);
 }
