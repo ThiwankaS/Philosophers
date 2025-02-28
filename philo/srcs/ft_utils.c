@@ -1,39 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/28 11:53:33 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/02/28 11:53:34 by tsomacha         ###   ########.fr       */
+/*   Created: 2025/02/28 08:48:11 by tsomacha          #+#    #+#             */
+/*   Updated: 2025/02/28 08:59:31 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int main (int argc, char *argv[])
+int	ft_error(void)
 {
-	int	count;
-	int	step;
-	long	*data;
-
-	count = 1;
-	step = 0;
-	if (argc == 5 || argc == 6)
-	{
-		data = malloc(sizeof(long) * argc);
-		if (!data)
-			ft_error();
-		while(count < argc)
-		{
-			data[step] = ft_atol(argv[count]);
-			count++;
-			step++;
-		}
-		ft_start(data, argc);
-	}
-	else
-		ft_error();
-	return (0);
+	write(2,"Error\n",7);
+	return (1);
 }

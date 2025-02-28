@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_help.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/28 11:53:33 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/02/28 11:53:34 by tsomacha         ###   ########.fr       */
+/*   Created: 2025/02/28 11:53:24 by tsomacha          #+#    #+#             */
+/*   Updated: 2025/02/28 12:45:05 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int main (int argc, char *argv[])
+void	ft_start(long *data, int size)
 {
-	int	count;
-	int	step;
-	long	*data;
 
-	count = 1;
-	step = 0;
-	if (argc == 5 || argc == 6)
+	t_timeval tv;
+	t_timezone tz;
+
+	gettimeofday(&tv, &tz);
+
+	int count = 0;
+	while(count < size)
 	{
-		data = malloc(sizeof(long) * argc);
-		if (!data)
-			ft_error();
-		while(count < argc)
-		{
-			data[step] = ft_atol(argv[count]);
-			count++;
-			step++;
-		}
-		ft_start(data, argc);
+		printf("%ld\n", data[count]);
+		count++;
 	}
-	else
-		ft_error();
-	return (0);
+
+	printf("Seconds since 1/1/1970: %lu\n",tv.tv_sec);
+	printf("Microseconds: %ld\n",tv.tv_usec);
+	printf("Minutes west of Greenwich: %d\n",tz.tz_minuteswest);
+	printf("Daylight Saving Time adjustment: %d\n",tz.tz_dsttime);
+
 }
