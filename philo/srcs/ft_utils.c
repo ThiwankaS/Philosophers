@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 08:48:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/02/28 08:59:31 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/02/28 23:52:32 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int	ft_error(void)
 {
-	write(2,"Error\n",7);
+	write(2, "Error\n", 7);
 	return (1);
 }

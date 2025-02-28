@@ -6,16 +6,16 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:53:33 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/02/28 11:53:34 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/02/28 23:57:18 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int main (int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	int	count;
-	int	step;
+	int		count;
+	int		step;
 	long	*data;
 
 	count = 1;
@@ -25,7 +25,7 @@ int main (int argc, char *argv[])
 		data = malloc(sizeof(long) * argc);
 		if (!data)
 			ft_error();
-		while(count < argc)
+		while (count < argc)
 		{
 			data[step] = ft_atol(argv[count]);
 			count++;

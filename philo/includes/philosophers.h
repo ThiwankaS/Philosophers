@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/28 23:51:13 by tsomacha          #+#    #+#             */
+/*   Updated: 2025/02/28 23:53:39 by tsomacha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
@@ -8,24 +20,13 @@
 # include <unistd.h>
 # include <limits.h>
 # include <sys/time.h>
+# include <time.h>
 
 typedef struct s_philosopher
 {
 	bool	fork_in_hand;
 	char	*state;
-} t_philosopher;
-
-typedef struct s_timeval
-{
-	time_t tv_sec;
-	suseconds_t tv_usec;
-} t_timeval;
-
-typedef struct s_timezone
-{
-	int tz_minuteswest;
-	int tz_dsttime;
-} t_timezone;
+}	t_philosopher;
 
 int		ft_error(void);
 long	ft_atol(const char *nptr);
