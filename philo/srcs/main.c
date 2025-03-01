@@ -6,34 +6,61 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:53:33 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/02/28 23:57:18 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/01 21:58:05 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char *argv[])
-{
-	int		count;
-	int		step;
-	long	*data;
+int balance = 0;
+pthread_mutex_t mutex;
 
-	count = 1;
-	step = 0;
-	if (argc == 5 || argc == 6)
-	{
-		data = malloc(sizeof(long) * argc);
-		if (!data)
-			ft_error();
-		while (count < argc)
-		{
-			data[step] = ft_atol(argv[count]);
-			count++;
-			step++;
-		}
-		ft_start(data, argc);
-	}
-	else
-		ft_error();
+void wrtite_balance(int new_balance)
+{
+	usleep(250000);
+	balance = new_balance;
+}
+
+int read_balance(void)
+{
+	usleep(250000);
+	return balance;
+}
+
+void *deposit(void *amount)
+{
+	pthread_mutex_lock(&mutex);
+
+	int account_balance = read_balance();
+	account_balance = account_balance + *((int *)amount);
+	wrtite_balance(account_balance);
+
+	pthread_mutex_unlock(&mutex);
+	return NULL;
+}
+
+int	main(void)
+{
+	int before = read_balance();
+	printf("before : %d\n", before);
+
+	pthread_t thread1;
+	pthread_t thread2;
+
+	pthread_mutex_init(&mutex, NULL);
+
+	int deposit1 = 300;
+	int deposit2 = 200;
+
+	pthread_create(&thread1, NULL, deposit, (void *) &deposit1);
+	pthread_create(&thread2, NULL, deposit, (void *) &deposit2);
+
+	pthread_join(thread1, NULL);
+	pthread_join(thread2, NULL);
+
+	pthread_mutex_destroy(&mutex);
+
+	int after = read_balance();
+	printf("after : %d\n", after);
 	return (0);
 }
