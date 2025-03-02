@@ -6,27 +6,37 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:53:24 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/02/28 23:58:04 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/02 04:13:22 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_start(long *data, int size)
+t_forks *ft_init_forks(int size)
 {
-	int				count;
-	struct timeval	tv;
-	struct timezone	tz;
-
-	gettimeofday(&tv, &tz);
-	count = 0;
-	while (count < size)
+	int count = 0;
+	t_forks *forks = malloc(sizeof(t_forks) * size);
+	while(count < size)
 	{
-		printf("%ld\n", data[count]);
+		forks[count].id = count + 1;
+		forks[count].is_taken = false;
 		count++;
 	}
-	printf("Seconds since 1/1/1970: %lu\n", tv.tv_sec);
-	printf("Microseconds: %ld\n", tv.tv_usec);
-	printf("Minutes west of Greenwich: %d\n", tz.tz_minuteswest);
-	printf("Daylight Saving Time adjustment: %d\n", tz.tz_dsttime);
+	return (forks);
+}
+
+t_philosopher *ft_init_philo(int size, t_forks *forks)
+{
+	int count = 0;
+	t_philosopher *philo = malloc(sizeof(t_philosopher) * size);
+	while(count < size)
+	{
+		philo[count].id = count + 1;
+		philo[count].is_alive = true;
+		philo[count].meals_eaten = 0;
+		philo[count].fork_l = &forks[count];
+		philo[count].fork_r = NULL;
+		count++;
+	}
+	return (philo);
 }

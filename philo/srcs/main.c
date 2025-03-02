@@ -6,61 +6,50 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:53:33 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/01 21:58:05 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/02 04:18:33 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int balance = 0;
-pthread_mutex_t mutex;
-
-void wrtite_balance(int new_balance)
+void *ft_routine(void *arg)
 {
-	usleep(250000);
-	balance = new_balance;
+	t_philosopher philo = *((t_philosopher *)arg);
+	while(philo.is_alive)
+	{
+		printf("philosopher %d is eating with fork %d\n", philo.id, philo.fork_l->id);
+		philo.meals_eaten++;
+		usleep(1000000);
+		printf("philosopher %d is sleeping\n", philo.id);
+		usleep(1500000);
+		printf("philosopher %d is thinking\n", philo.id);
+		usleep(2500000);
+		printf("philosopher %d { no of meals } : %d\n", philo.id, philo.meals_eaten);
+		printf("------------------------------------\n");
+		usleep(1500000);
+	}
+	return (NULL);
 }
 
-int read_balance(void)
+int	main(int argc, char *argv[])
 {
-	usleep(250000);
-	return balance;
-}
-
-void *deposit(void *amount)
-{
-	pthread_mutex_lock(&mutex);
-
-	int account_balance = read_balance();
-	account_balance = account_balance + *((int *)amount);
-	wrtite_balance(account_balance);
-
-	pthread_mutex_unlock(&mutex);
-	return NULL;
-}
-
-int	main(void)
-{
-	int before = read_balance();
-	printf("before : %d\n", before);
-
-	pthread_t thread1;
-	pthread_t thread2;
-
-	pthread_mutex_init(&mutex, NULL);
-
-	int deposit1 = 300;
-	int deposit2 = 200;
-
-	pthread_create(&thread1, NULL, deposit, (void *) &deposit1);
-	pthread_create(&thread2, NULL, deposit, (void *) &deposit2);
-
-	pthread_join(thread1, NULL);
-	pthread_join(thread2, NULL);
-
-	pthread_mutex_destroy(&mutex);
-
-	int after = read_balance();
-	printf("after : %d\n", after);
+	if(argc == 2)
+	{
+		int size = (int)ft_atol(argv[1]);
+		int count = 0;
+		t_forks *forks = ft_init_forks(size);
+		t_philosopher *philos = ft_init_philo(size, forks);
+		while (count < size)
+		{
+			pthread_create(&philos[count].thread, NULL, ft_routine, &philos[count]);
+			count++;
+		}
+		count = 0;
+		while (count < size)
+		{
+			pthread_join(philos[count].thread, NULL);
+			count++;
+		}
+	}
 	return (0);
 }

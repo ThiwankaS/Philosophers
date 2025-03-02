@@ -6,14 +6,9 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 08:48:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/02/28 23:52:32 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/02 04:14:11 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_error(void)
-{
-	write(2, "Error\n", 7);
-	return (1);
-}
