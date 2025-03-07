@@ -93,6 +93,11 @@ typedef struct s_philo
 	t_mutexes	mutexes;
 }	t_philo;
 ```
+### starting the program
+```C
+int ft_start(t_philo *philos, int size)
+```
+Function ```ft_start``` will start the program as name suggested. In this project we are using addition theard called observer to oversee the times. In that way we can keep track of time in a more centralized way, becuase once all the treads starts to process each and every thread in independent from each other. The observer thread will check the last meal time agains the time to die and no of meals each philosphers had.
 
 
 
