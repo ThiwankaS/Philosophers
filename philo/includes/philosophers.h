@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 23:51:13 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/09 11:38:49 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/09 22:04:44 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,53 @@
 
 # define MAX_PHILO 200
 
+typedef pthread_mutex_t t_mutex;
+typedef pthread_t t_thread;
 
+typedef struct	s_fork
+{
+	int id;
+	t_mutex fork;
+}	t_fork;
+
+typedef struct	s_rule
+{
+	t_mutex	write_lock;
+	t_mutex	meal_lock;
+	t_mutex	dead_lock;
+}	t_rule;
+
+typedef struct	s_philo
+{
+	int			id;
+	int			size;
+	int			meal_to_eat;
+	int			meal_eaten;
+	int			*is_alive;
+	size_t		time_die;
+	size_t		time_eat;
+	size_t		time_sleep;
+	size_t		time_last_meal;
+	t_thread	thread;
+	t_mutex		*write_lock;
+	t_mutex		*meal_lock;
+	t_mutex		*dead_lock;
+	t_fork		*fork_l;
+	t_fork		*fork_r;
+}	t_philo;
+
+typedef struct	s_table
+{
+	t_fork *froks;
+	t_rule *rules;
+	t_philo *philos;
+}	t_table;
+
+t_fork	*ft_init_forks(int size);
+t_rule	*ft_init_rules(void);
+t_philo	*ft_init_philos(t_fork *forks, t_rule *rules, char *argv[], int size);
+t_table	*ft_init_table(t_fork *forks, t_rule *rules, t_philo *philos);
+int	ft_exit(t_table *table);
+long	ft_atol(const char *nptr);
 
 #endif
