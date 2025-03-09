@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 08:48:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/09 11:40:01 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/09 21:30:03 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,18 @@ size_t	ft_strlen(const char *str)
 	while (str && str[count])
 		count++;
 	return (count);
+}
+
+int ft_exit(t_table *table)
+{
+	if (!table)
+		return (0);
+	if (table->froks)
+		free(table->froks);
+	if (table->rules)
+		free(table->rules);
+	if (table->philos)
+		free(table->philos);
+	free(table);
+	return (1);
 }
