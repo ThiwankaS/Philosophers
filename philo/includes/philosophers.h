@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 23:51:13 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/09 22:04:44 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/09 23:09:35 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <pthread.h>
 # include <limits.h>
 # include <sys/time.h>
+# include <semaphore.h>
 
 # define MAX_PHILO 200
 
@@ -37,6 +38,8 @@ typedef struct	s_rule
 	t_mutex	write_lock;
 	t_mutex	meal_lock;
 	t_mutex	dead_lock;
+	sem_t	cycle_fork;
+	sem_t	cycel_meal;
 }	t_rule;
 
 typedef struct	s_philo
@@ -51,9 +54,7 @@ typedef struct	s_philo
 	size_t		time_sleep;
 	size_t		time_last_meal;
 	t_thread	thread;
-	t_mutex		*write_lock;
-	t_mutex		*meal_lock;
-	t_mutex		*dead_lock;
+	t_rule		*rules;
 	t_fork		*fork_l;
 	t_fork		*fork_r;
 }	t_philo;
@@ -66,10 +67,11 @@ typedef struct	s_table
 }	t_table;
 
 t_fork	*ft_init_forks(int size);
-t_rule	*ft_init_rules(void);
+t_rule	*ft_init_rules(int size);
 t_philo	*ft_init_philos(t_fork *forks, t_rule *rules, char *argv[], int size);
 t_table	*ft_init_table(t_fork *forks, t_rule *rules, t_philo *philos);
-int	ft_exit(t_table *table);
+int		ft_exit(t_table *table);
 long	ft_atol(const char *nptr);
+int		ft_set_table(t_table *table, int size);
 
 #endif

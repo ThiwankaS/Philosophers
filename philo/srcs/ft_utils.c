@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 08:48:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/09 21:30:03 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/09 23:56:33 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *str)
 	return (count);
 }
 
-int ft_exit(t_table *table)
+int	ft_exit(t_table *table)
 {
 	if (!table)
 		return (0);
