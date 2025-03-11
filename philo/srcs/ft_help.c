@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:53:24 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/11 05:57:41 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:12:51 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,27 @@ void	*simulation(void *arg)
 	return (NULL);
 }
 
-int	ft_set_table(t_table *table, int size)
+int has_all_eaten(t_philo *philos, int meals, int size)
+{
+	int count = 0;
+	t_mutex *lock = &philos[0].rules->meal_lock;
+	if(meals == -1)
+		return (0);
+	else
+	{
+		while(count < size)
+		{
+			pthread_mutex_lock(lock);
+			if(philos[count].meal_eaten > meals)
+				return (1);
+			pthread_mutex_unlock(lock);
+			count++;
+		}
+		return (0);
+	}
+}
+
+int ft_drama(t_table *table, int size)
 {
 	int		count;
 	t_philo	*philo;
@@ -91,5 +111,30 @@ int	ft_set_table(t_table *table, int size)
 			return (0);
 		count++;
 	}
+	return (1);
+}
+
+void *obsrev(void *arg)
+{
+	int size;
+	int meals;
+	t_table *table;
+
+	table = (t_table *)arg;
+	size = table->philos[0].size;
+	meals = table->philos[0].meal_to_eat;
+	while(!has_all_eaten(table->philos, meals, size))
+	{
+		ft_drama(table, size);
+	}
+	return (NULL);
+}
+
+int	ft_set_table(t_table *table)
+{
+	pthread_t observe_therad;
+
+	pthread_create(&observe_therad, NULL, &obsrev, table);
+	pthread_join(observe_therad, NULL);
 	return (1);
 }

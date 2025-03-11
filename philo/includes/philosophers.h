@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 23:51:13 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/11 05:39:43 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:49:09 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_philo	*ft_init_philos(t_fork *forks, t_rule *rules, char *argv[], int size);
 t_table	*ft_init_table(t_fork *forks, t_rule *rules, t_philo *philos);
 int		ft_exit(t_table *table);
 long	ft_atol(const char *nptr);
-int		ft_set_table(t_table *table, int size);
+int		ft_set_table(t_table *table);
 int	ft_print_action(t_philo *philo, char *str);
 size_t	get_current_time(void);
 int	ft_usleep(size_t m_sec);
