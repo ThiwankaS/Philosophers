@@ -6,24 +6,47 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:53:24 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/10 00:23:22 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/11 05:57:41 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	life(t_philo *philo)
+int ft_sleep(t_philo *philo)
 {
-	printf("{%d} is thinking\n", philo->id);
+	ft_print_action(philo, "is sleeping");
+	ft_usleep(philo->time_sleep);
+	return (1);
+}
+
+int ft_think(t_philo *philo)
+{
+	ft_print_action(philo, "is thinking");
+	return (1);
+}
+
+int ft_eat(t_philo *philo)
+{
 	sem_wait(&philo->rules->cycle_fork);
+
 	pthread_mutex_lock(&philo->fork_l->fork);
-	printf("{%d} has taken fork {%d}\n", philo->id, philo->fork_l->id);
+	ft_print_action(philo, "has taken a fork");
+
 	pthread_mutex_lock(&philo->fork_r->fork);
-	printf("{%d} has taken fork {%d}\n", philo->id, philo->fork_r->id);
-	printf("{%d} is eating\n", philo->id);
-	sleep(philo->time_eat);
+	ft_print_action(philo, "has taken a fork");
+
+	pthread_mutex_lock(&philo->rules->meal_lock);
+	philo->time_last_meal = get_current_time();
+	philo->meal_eaten++;
+	pthread_mutex_unlock(&philo->rules->meal_lock);
+
+	ft_print_action(philo, "is eating");
+	ft_usleep(philo->time_eat);
+
 	pthread_mutex_unlock(&philo->fork_l->fork);
+
 	pthread_mutex_unlock(&philo->fork_r->fork);
+
 	sem_post(&philo->rules->cycle_fork);
 	return (1);
 }
@@ -34,7 +57,11 @@ void	*simulation(void *arg)
 
 	philo = (t_philo *)arg;
 	while (1)
-		life(philo);
+	{
+		ft_think(philo);
+		ft_eat(philo);
+		ft_sleep(philo);
+	}
 	return (NULL);
 }
 

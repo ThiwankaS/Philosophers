@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 06:30:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/10 00:06:07 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/11 05:39:31 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_rule	*ft_init_rules(int size)
 	pthread_mutex_init(&rules->meal_lock, NULL);
 	pthread_mutex_init(&rules->write_lock, NULL);
 	sem_init(&rules->cycle_fork, 0, size - 1);
-	sem_init(&rules->cycel_meal, 0, 1);
+	sem_init(&rules->cycle_meal, 0, size / 2);
 	return (rules);
 }
 
@@ -59,9 +59,11 @@ static int	ft_set_param(t_philo *philo, char *argv[])
 t_philo	*ft_init_philos(t_fork *forks, t_rule *rules, char *argv[], int size)
 {
 	t_philo	*philos;
+	size_t	current_time;
 	int		count;
 
 	count = 0;
+	current_time = get_current_time();
 	philos = malloc(sizeof(t_philo) * size);
 	if (!philos || !forks || !rules)
 		return (NULL);
@@ -76,6 +78,8 @@ t_philo	*ft_init_philos(t_fork *forks, t_rule *rules, char *argv[], int size)
 		else
 			philos[count].fork_r = &forks[count + 1];
 		philos[count].rules = rules;
+		philos[count].time_last_meal = current_time;
+		philos[count].time_born = current_time;
 		count++;
 	}
 	return (philos);
