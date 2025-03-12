@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 04:30:02 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/12 07:51:49 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:15:04 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	ft_destroy(t_table *table, int size)
 {
 	int count;
 	t_mutex *mutex;
-	t_philo *philo;
 
 	count = 0;
 	pthread_mutex_destroy(&table->dead_lock);
@@ -25,10 +24,7 @@ int	ft_destroy(t_table *table, int size)
 	while (count < size)
 	{
 		mutex = &table->froks[count].fork;
-		philo = &table->philos[count];
-		if ((pthread_join(philo->thread, NULL)) != 0
-			|| (pthread_mutex_destroy(mutex)) != 0)
-			return (0);
+		pthread_mutex_destroy(mutex);
 		count++;
 	}
 	return (1);

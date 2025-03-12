@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:53:24 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/12 07:48:17 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:35:21 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ int ft_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->fork_l->fork);
 	ft_print_action(philo, "has taken a fork");
+	if(philo->size == 1)
+	{
+		ft_usleep(philo->time_die);
+		ft_print_action(philo, "died");
+		pthread_mutex_unlock(&philo->fork_l->fork);
+		return (1);
+	}
 	pthread_mutex_lock(&philo->fork_r->fork);
 	ft_print_action(philo, "has taken a fork");
 	pthread_mutex_lock(philo->meal_lock);
@@ -84,9 +91,9 @@ int has_all_eaten(t_philo *philos, int meals, int size)
 	}
 	if (finished_eating == size)
 	{
-		pthread_mutex_lock(philos[0].meal_lock);
-		philos[0].is_alive = 0;
-		pthread_mutex_unlock(philos[0].meal_lock);
+		pthread_mutex_lock(philos[0].dead_lock);
+		*philos->is_alive = 0;
+		pthread_mutex_unlock(philos[0].dead_lock);
 		return (1);
 	}
 	return (0);
@@ -114,19 +121,26 @@ void *obsrev(void *arg)
 int	ft_set_table(t_table *table, int size)
 {
 	int			count;
-	t_philo		*philo;
-	t_mutex		*mutex;
+	t_philo		*philos;
+	t_fork		*forks;
 	pthread_t	observe_therad;
 
-	pthread_create(&observe_therad, NULL, &obsrev, table);
+	philos = table->philos;
+	forks = table->froks;
+	if (pthread_create(&observe_therad, NULL, &obsrev, table) != 0)
+		return (0);
 	count = 0;
 	while (count < size)
 	{
-		mutex = &table->froks[count].fork;
-		philo = &table->philos[count];
-		if ((pthread_mutex_init(mutex, NULL)) != 0
-			|| (pthread_create(&philo->thread, NULL, simulation, philo)) != 0)
+		if ((pthread_mutex_init(&forks[count].fork, NULL)) != 0
+			|| (pthread_create(&philos[count].thread, NULL, simulation, &philos[count])) != 0)
 			return (0);
+		count++;
+	}
+	count = 0;
+	while(count < size)
+	{
+		pthread_join(philos[count].thread, NULL);
 		count++;
 	}
 	pthread_join(observe_therad, NULL);
