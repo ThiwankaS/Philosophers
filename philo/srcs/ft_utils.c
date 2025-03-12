@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 08:48:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/12 07:26:33 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:46:47 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	ft_print_action(t_philo *philo, char *str)
 
 	pthread_mutex_lock(philo->write_lock);
 	time = get_current_time() - philo->time_born;
-	printf("%ld %d %s\n", time, philo->id, str);
+	if (is_alive(philo))
+		printf("%ld %d %s\n", time, philo->id, str);
+	else
+		printf("%ld %d %s\n", time, philo->id, str);
 	pthread_mutex_unlock(philo->write_lock);
 	return (0);
 }
@@ -71,13 +74,11 @@ int	ft_exit(t_table *table)
 {
 	if (!table)
 		return (0);
-	if (table->philos[0].is_alive)
-		free(table->philos[0].is_alive);
 	if (table->froks)
 		free(table->froks);
 	if (table->philos)
 		free(table->philos);
-	free(table);
+	//free(table);
 	return (1);
 }
 

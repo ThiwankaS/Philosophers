@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 23:51:13 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/12 07:50:51 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:42:18 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int		ft_init_table(t_table *table);
 long	ft_atol(const char *nptr);
 int		ft_set_table(t_table *table, int size);
 int		ft_destroy(t_table *table, int size);
+int is_alive(t_philo *philo);
 
 //ft_utils.c
 int	ft_usleep(size_t m_sec);

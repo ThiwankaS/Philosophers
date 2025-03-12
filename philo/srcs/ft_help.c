@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:53:24 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/12 10:35:21 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:06:21 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int ft_eat(t_philo *philo)
 	if(philo->size == 1)
 	{
 		ft_usleep(philo->time_die);
-		ft_print_action(philo, "died");
+		//ft_print_action(philo, "died");
 		pthread_mutex_unlock(&philo->fork_l->fork);
 		return (1);
 	}
@@ -52,7 +52,7 @@ int ft_eat(t_philo *philo)
 int is_alive(t_philo *philo)
 {
 	pthread_mutex_lock(philo->dead_lock);
-	if (*philo->is_alive == 0)
+	if (*(philo->is_alive) == 0)
 		return (pthread_mutex_unlock(philo->dead_lock), 0);
 	pthread_mutex_unlock(philo->dead_lock);
 	return (1);
@@ -63,12 +63,13 @@ void	*simulation(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (is_alive(philo))
+	while (*(philo->is_alive))
 	{
 		ft_think(philo);
 		ft_eat(philo);
 		ft_sleep(philo);
 	}
+	ft_print_action(philo,"died");
 	return (NULL);
 }
 
@@ -92,27 +93,26 @@ int has_all_eaten(t_philo *philos, int meals, int size)
 	if (finished_eating == size)
 	{
 		pthread_mutex_lock(philos[0].dead_lock);
-		*philos->is_alive = 0;
+		*(philos[0].is_alive) = 0;
 		pthread_mutex_unlock(philos[0].dead_lock);
-		return (1);
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 void *obsrev(void *arg)
 {
 	int size;
 	int meals;
-	t_table *table;
 	t_philo *philos;
 
-	table = (t_table *)arg;
-	philos = table->philos;
+	philos = (t_philo *)arg;
 	size = philos[0].size;
 	meals = philos[0].meal_to_eat;
+	ft_usleep(5);
 	while(1)
 	{
-		if (!has_all_eaten(philos, meals, size))
+		if(!has_all_eaten(philos, meals, size))
 			break;
 	}
 	return (arg);
@@ -127,8 +127,7 @@ int	ft_set_table(t_table *table, int size)
 
 	philos = table->philos;
 	forks = table->froks;
-	if (pthread_create(&observe_therad, NULL, &obsrev, table) != 0)
-		return (0);
+	pthread_create(&observe_therad, NULL, &obsrev, table->philos);
 	count = 0;
 	while (count < size)
 	{
