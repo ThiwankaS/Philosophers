@@ -12,6 +12,7 @@ SRCS_PROGRAM		= \
 						srcs/ft_help.c\
 						srcs/ft_utils.c\
 						srcs/ft_init.c\
+						srcs/ft_exit.c\
 
 OBJS_PROGRAM		= $(SRCS_PROGRAM:.c=.o)
 
