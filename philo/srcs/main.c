@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:53:33 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/12 07:51:28 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/13 07:15:50 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char *argv[])
 		size = ft_atol(argv[1]);
 		forks = ft_init_forks(size);
 		philos = ft_init_philos(forks, &table, argv, size);
-		ft_init_table(&table);
+		ft_init_table(&table, size);
 		table.froks = forks;
 		table.philos = philos;
 		ft_set_table(&table, size);

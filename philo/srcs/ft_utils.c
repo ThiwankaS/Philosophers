@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 08:48:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/12 16:46:47 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/13 07:32:22 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,5 @@ int	ft_error(char *str)
 	res += write(2, str, len);
 	res += write(2, "]\n", 2);
 	return (res);
-}
-
-int	ft_exit(t_table *table)
-{
-	if (!table)
-		return (0);
-	if (table->froks)
-		free(table->froks);
-	if (table->philos)
-		free(table->philos);
-	//free(table);
-	return (1);
 }
 

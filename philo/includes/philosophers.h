@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 23:51:13 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/12 16:42:18 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:26:43 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct	s_philo
 	int			meal_to_eat;
 	int			meal_eaten;
 	int			*is_alive;
+	int			is_eating;
 	size_t		time_die;
 	size_t		time_eat;
 	size_t		time_sleep;
@@ -48,6 +49,7 @@ typedef struct	s_philo
 	t_mutex		*write_lock;
 	t_mutex		*meal_lock;
 	t_mutex		*dead_lock;
+	sem_t		*cycle;
 	t_thread	thread;
 	t_fork		*fork_l;
 	t_fork		*fork_r;
@@ -59,13 +61,14 @@ typedef struct	s_table
 	t_mutex	write_lock;
 	t_mutex	meal_lock;
 	t_mutex	dead_lock;
+	sem_t	cycel;
 	t_fork	*froks;
 	t_philo	*philos;
 }	t_table;
 
 t_fork	*ft_init_forks(int size);
 t_philo	*ft_init_philos(t_fork *forks, t_table *table, char *argv[], int size);
-int		ft_init_table(t_table *table);
+int		ft_init_table(t_table *table, int size);
 long	ft_atol(const char *nptr);
 int		ft_set_table(t_table *table, int size);
 int		ft_destroy(t_table *table, int size);

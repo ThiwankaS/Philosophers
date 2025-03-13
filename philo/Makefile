@@ -4,7 +4,7 @@ CMD					= cc
 
 INCLUDES			= includes
 
-CFLAGS				= -Werror -Wall -Wextra -I$(INCLUDES) -g
+CFLAGS				= -Werror -Wall -Wextra -g -I$(INCLUDES) -pthread #-fsanitize=thread
 
 SRCS_PROGRAM		= \
 						srcs/main.c\
@@ -15,6 +15,8 @@ SRCS_PROGRAM		= \
 						srcs/ft_exit.c\
 
 OBJS_PROGRAM		= $(SRCS_PROGRAM:.c=.o)
+
+TSAN_OPTIONS		= second_deadlock_stack=1
 
 all : $(TARGET_PROGRAM)
 
