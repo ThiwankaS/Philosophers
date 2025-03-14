@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 06:30:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/13 14:39:04 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:29:21 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,3 @@ t_philo	*ft_init_philos(t_fork *forks, t_table *table, char *argv[], int size)
 	}
 	return (philos);
 }
-

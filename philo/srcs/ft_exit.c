@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 04:30:02 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/13 07:33:34 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:29:50 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_destroy(t_table *table, int size)
 {
-	int count;
-	t_mutex *mutex;
+	int		count;
+	t_mutex	*mutex;
 
 	count = 0;
 	pthread_mutex_destroy(&table->dead_lock);

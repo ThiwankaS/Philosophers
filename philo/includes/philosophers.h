@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 23:51:13 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/13 14:26:43 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:27:27 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@
 
 # define MAX_PHILO 200
 
-typedef pthread_mutex_t t_mutex;
-typedef pthread_t t_thread;
-typedef struct timeval t_timeval;
-typedef struct	s_fork
+typedef pthread_mutex_t	t_mutex;
+typedef pthread_t		t_thread;
+typedef struct timeval	t_timeval;
+typedef struct s_fork
 {
-	int id;
-	t_mutex fork;
+	int		id;
+	t_mutex	fork;
 }	t_fork;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int			id;
 	int			size;
@@ -55,9 +55,9 @@ typedef struct	s_philo
 	t_fork		*fork_r;
 }	t_philo;
 
-typedef struct	s_table
+typedef struct s_table
 {
-	int	is_alive;
+	int		is_alive;
 	t_mutex	write_lock;
 	t_mutex	meal_lock;
 	t_mutex	dead_lock;
@@ -72,11 +72,11 @@ int		ft_init_table(t_table *table, int size);
 long	ft_atol(const char *nptr);
 int		ft_set_table(t_table *table, int size);
 int		ft_destroy(t_table *table, int size);
-int is_alive(t_philo *philo);
+int		is_alive(t_philo *philo);
 
 //ft_utils.c
-int	ft_usleep(size_t m_sec);
-int	ft_print_action(t_philo *philo, char *str);
+int		ft_usleep(size_t m_sec);
+int		ft_print_action(t_philo *philo, char *str);
 size_t	get_current_time(void);
 size_t	ft_strlen(const char *str);
 int		ft_exit(t_table *table); //temporary

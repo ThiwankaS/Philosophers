@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 08:48:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/13 07:32:22 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:28:55 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,3 @@ int	ft_error(char *str)
 	res += write(2, "]\n", 2);
 	return (res);
 }
-
