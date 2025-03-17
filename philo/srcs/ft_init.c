@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 06:30:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/14 12:29:21 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/17 00:03:24 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ t_fork	*ft_init_forks(int size)
 	return (forks);
 }
 
-int	ft_init_table(	t_table	*table, int size)
+int	ft_init_table(	t_table	*table)
 {
 	table->is_alive = 1;
 	pthread_mutex_init(&table->dead_lock, NULL);
 	pthread_mutex_init(&table->meal_lock, NULL);
 	pthread_mutex_init(&table->write_lock, NULL);
-	sem_init(&table->cycel, 0, size - 1);
 	return (1);
 }
 
@@ -52,6 +51,7 @@ static int	ft_set_param(t_philo *philo, char *argv[])
 	else
 		philo->meal_to_eat = -1;
 	philo->meal_eaten = 0;
+	philo->is_eating = 0;
 	philo->time_last_meal = current_time;
 	philo->time_born = current_time;
 	return (1);
@@ -79,7 +79,6 @@ t_philo	*ft_init_philos(t_fork *forks, t_table *table, char *argv[], int size)
 		philos[count].dead_lock = &table->dead_lock;
 		philos[count].meal_lock = &table->meal_lock;
 		philos[count].write_lock = &table->write_lock;
-		philos[count].cycle = &table->cycel;
 		ft_set_param(&philos[count], argv);
 		count++;
 	}

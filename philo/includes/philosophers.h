@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 23:51:13 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/14 12:27:27 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/16 23:37:14 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_philo
 	t_mutex		*write_lock;
 	t_mutex		*meal_lock;
 	t_mutex		*dead_lock;
-	sem_t		*cycle;
 	t_thread	thread;
 	t_fork		*fork_l;
 	t_fork		*fork_r;
@@ -61,18 +60,25 @@ typedef struct s_table
 	t_mutex	write_lock;
 	t_mutex	meal_lock;
 	t_mutex	dead_lock;
-	sem_t	cycel;
 	t_fork	*froks;
 	t_philo	*philos;
 }	t_table;
 
 t_fork	*ft_init_forks(int size);
 t_philo	*ft_init_philos(t_fork *forks, t_table *table, char *argv[], int size);
-int		ft_init_table(t_table *table, int size);
+int		ft_init_table(t_table *table);
 long	ft_atol(const char *nptr);
 int		ft_set_table(t_table *table, int size);
 int		ft_destroy(t_table *table, int size);
 int		is_alive(t_philo *philo);
+int		ft_error(char *str);
+
+int	ft_is_valid(char *argv[], int argc);
+
+int	ft_sleep(t_philo *philo);
+int	ft_think(t_philo *philo);
+int	ft_eat(t_philo *philo);
+void	*ft_sml(void *arg);
 
 //ft_utils.c
 int		ft_usleep(size_t m_sec);

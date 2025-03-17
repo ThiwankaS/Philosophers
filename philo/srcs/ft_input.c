@@ -1,42 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_input.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 04:30:02 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/16 23:37:53 by tsomacha         ###   ########.fr       */
+/*   Created: 2025/03/16 22:01:49 by tsomacha          #+#    #+#             */
+/*   Updated: 2025/03/16 23:08:18 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_destroy(t_table *table, int size)
+int	ft_is_valid(char *argv[], int argc)
 {
+	long	arg;
 	int		count;
-	t_mutex	*mutex;
 
-	count = 0;
-	pthread_mutex_destroy(&table->dead_lock);
-	pthread_mutex_destroy(&table->meal_lock);
-	pthread_mutex_destroy(&table->write_lock);
-	while (count < size)
+	arg = ft_atol(argv[1]);
+	if (arg < 1 || arg > MAX_PHILO)
+		return (ft_error("Invalid input <no_of_philosophers>"));
+	count = 2;
+	while (count < argc)
 	{
-		mutex = &table->froks[count].fork;
-		pthread_mutex_destroy(mutex);
+		arg = ft_atol(argv[count]);
+		if (arg < 0 || arg > INT_MAX)
+			return (ft_error("Invalid input"));
 		count++;
 	}
-	return (1);
-}
-
-int	ft_exit(t_table *table)
-{
-	if (!table)
-		return (0);
-	if (table->froks)
-		free(table->froks);
-	if (table->philos)
-		free(table->philos);
 	return (1);
 }

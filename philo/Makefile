@@ -7,12 +7,14 @@ INCLUDES			= includes
 CFLAGS				= -Werror -Wall -Wextra -g -I$(INCLUDES) -pthread #-fsanitize=thread
 
 SRCS_PROGRAM		= \
-						srcs/main.c\
-						srcs/ft_atol.c\
-						srcs/ft_help.c\
-						srcs/ft_utils.c\
-						srcs/ft_init.c\
-						srcs/ft_exit.c\
+	srcs/ft_atol.c\
+	srcs/ft_exit.c\
+	srcs/ft_help.c\
+	srcs/ft_init.c\
+	srcs/ft_input.c\
+	srcs/ft_routine.c\
+	srcs/ft_utils.c\
+	srcs/main.c\
 
 OBJS_PROGRAM		= $(SRCS_PROGRAM:.c=.o)
 

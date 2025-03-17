@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 08:48:11 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/03/14 12:28:55 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/03/16 23:00:43 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ int	ft_error(char *str)
 	len = ft_strlen(str);
 	res += write(2, "ERROR ! : [ ", 12);
 	res += write(2, str, len);
-	res += write(2, "]\n", 2);
-	return (res);
+	res += write(2, " ]\n", 3);
+	return (0);
 }
